@@ -18,7 +18,7 @@ void print_str(int fd,char const *string){
 
 
 int main (int argc, char *argv[]){
-   
+    printf("argc: %i",argc);
     if (argc!=4){
 
     print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2");
