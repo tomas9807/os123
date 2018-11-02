@@ -5,6 +5,33 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/times.h>
+
+char ** get_parametros(int argc,char  **argv){
+    int const start_point_parametros = 2;
+    if (argc==start_point_parametros) return NULL; //no parameters supplied
+  
+   
+    size_t length_parametros = (argc  - start_point_parametros) + 1;  //+1 cause  will need a space for NULL
+
+    
+    char **parametros = (char **)malloc(length_parametros* sizeof(char*));
+    perror("allocating memory");
+    for (size_t i=0;i<(length_parametros -1 /*-1 for null at the end */);i++) 
+        parametros[i] = argv[i + start_point_parametros];
+    parametros[length_parametros -1] = NULL; //ensure that last one is null
+    
+    return parametros;
+    
+
+    }
+
+// void print_parametros(char **params){
+//     for(int i=0;i<3;i++)
+//     printf("param[%i] : %s",i,params[i]);
+//     fflush(stdout);
+// }  
+
+
 int main(int argc,char *argv[]){
 
 
@@ -15,28 +42,18 @@ if (argc>1){
 struct tms buf;
 int tics_per_second = sysconf(_SC_CLK_TCK);
 char const *prog = argv[1];
-char *parametros[argc -1];
+char **parametros = get_parametros(argc,argv);
 int status;
 clock_t proccess_time;
 
 
-
-
-    for (int i=0;i< argc -2  ;i++){ //cortar(slice) la parte de argv que contiene los parametros para el programa
-        parametros[i] = argv[i +2];
-    }
-
-  
 pid_t pdi = fork() ;  //crear un proceso hijo para que sea depues reemplazado por el programa a correr
 if (pdi<0){
     puts("error fork");
 }
 else if (pdi==0){  //es hijo
-  if(parametros[3]==NULL) parametros[3]=NULL;
-   printf("program: %s, param1: %s,param2: %s,param3: %s and last %s:\n",prog,parametros[0],parametros[1],parametros[2],parametros[3]);
-   fflush(stdout);
-   char const *perro[] = {"./ucp","20","first.txt","copy2.txt",NULL};
-   execv(prog,perro);
+  
+   execv(prog,parametros);
 }
 else{ //es padre
    if (wait(&status)==-1)  puts("wait error");
@@ -53,6 +70,7 @@ else{ //es padre
            ((double) buf.tms_cutime)/tics_per_second,
            ((double) buf.tms_cstime)/tics_per_second);
    }
+   free(parametros);
 
    
 }

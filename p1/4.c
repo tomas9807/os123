@@ -32,14 +32,15 @@ int main (int argc, char *argv[]){
     
     if (!BUFFSIZE || !*FILE1 || !*FILE2){
         print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2");
-       
+       printf("buffer: %i, param1: %s,param2: %s \n",BUFFSIZE,FILE1,FILE2);
+       fflush(stdout);
         exit(1);
     }
    
 
     if (BUFFSIZE>1 && BUFFSIZE<16384){
 
-        char const BUFFER [BUFFSIZE];
+        char  BUFFER [BUFFSIZE];
 
         int fd_file1, fd_file2;
         
