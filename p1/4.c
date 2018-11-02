@@ -18,7 +18,7 @@ void print_str(int fd,char const *string){
 
 
 int main (int argc, char *argv[]){
-    printf("argc: %i \n",argc);
+    
     if (argc!=4){
 
     print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2 \n");
@@ -32,7 +32,7 @@ int main (int argc, char *argv[]){
     
     if (!BUFFSIZE || !*FILE1 || !*FILE2){
         print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2");
-       printf("buffer: %i, param1: %s,param2: %s \n",BUFFSIZE,FILE1,FILE2);
+       
        fflush(stdout);
         exit(1);
     }
@@ -44,15 +44,15 @@ int main (int argc, char *argv[]){
 
         int fd_file1, fd_file2;
         
-        if ((fd_file1=open(FILE1,O_RDONLY))){
-            if( (fd_file2=open(FILE2,O_WRONLY|O_CREAT,0777)) ){
+        if ((fd_file1=open(FILE1,O_RDONLY)) == -1){
+            if( (fd_file2=open(FILE2,O_WRONLY|O_CREAT,0777)) ==-1 ){
 
 
              if (read(fd_file1,BUFFER,sizeof(BUFFER)) < 0) {
-                  print_str(STDERR_FILENO,"ha ocurrido al leer el archivo a copiar");
+                  print_str(STDERR_FILENO,"ha ocurrido un error al leer el archivo a copiar");
                   exit(1);
              }
-                printf("%s \n",BUFFER);
+                
                 if (write(fd_file2,BUFFER,sizeof(BUFFER)) < 0){
                     print_str(STDERR_FILENO,"ha ocurrido un error mientras se copiaba el archivo");
                     exit(1);

@@ -7,8 +7,8 @@
 #include <sys/times.h>
 
 char ** get_parametros(int argc,char  **argv){
-    int const start_point_parametros = 2;
-    if (argc==start_point_parametros) return NULL; //no parameters supplied
+    int const start_point_parametros = 1;
+    if (argc==2) return NULL; //no parameters supplied
   
    
     size_t length_parametros = (argc  - start_point_parametros) + 1;  //+1 cause  will need a space for NULL
@@ -40,7 +40,7 @@ if (argc>1){
 
 
 struct tms buf;
-int tics_per_second = sysconf(_SC_CLK_TCK);
+long double clktck=sysconf(_SC_CLK_TCK);
 char const *prog = argv[1];
 char **parametros = get_parametros(argc,argv);
 int status;
@@ -60,15 +60,15 @@ else{ //es padre
    else if (!WIFEXITED(status)) puts("proceso hijo  tuvo un error y no se completo exitosamente :");
    else if((proccess_time=times(&buf))==-1) puts("error al calcular el tiempo del proceso hijo");
    else{
-    printf("proceso hijo copiado %f seconds ago.\n\n",
-           ((double) proccess_time)/tics_per_second);
+    // printf("proceso hijo copiado %Lf seconds ago.\n\n",
+    //        ((long double) proccess_time)/clktck);
     printf("            utime           stime\n");
-    printf("parent:    %f        %f\n",
-           ((double) buf.tms_utime)/tics_per_second,
-           ((double) buf.tms_stime)/tics_per_second);
-    printf("child:     %f        %f\n",
-           ((double) buf.tms_cutime)/tics_per_second,
-           ((double) buf.tms_cstime)/tics_per_second);
+    // printf("parent:    %Lf        %Lf\n",
+    //        ((long double) buf.tms_utime)/clktck,
+    //        ((long double) buf.tms_stime)/clktck);
+    printf("child:     %Lf        %Lf\n",
+           ((long double) buf.tms_cutime)/clktck,
+           ((long double) buf.tms_cstime)/clktck);
    }
    free(parametros);
 
