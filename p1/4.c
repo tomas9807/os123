@@ -18,20 +18,21 @@ void print_str(int fd,char const *string){
 
 
 int main (int argc, char *argv[]){
-    printf("argc: %i",argc);
+    printf("argc: %i \n",argc);
     if (argc!=4){
 
-    print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2");
+    print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2 \n");
     exit(1);
 
     }
-   
+  
     int const BUFFSIZE  =  atoi(argv[1]);
     char const *FILE1 = argv[2];
     char const *FILE2 = argv[3];
-   
+    
     if (!BUFFSIZE || !*FILE1 || !*FILE2){
         print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2");
+       
         exit(1);
     }
    
@@ -81,8 +82,8 @@ int main (int argc, char *argv[]){
         }
         int close1 = close(fd_file1);
         int close2 = close(fd_file2);
-
-
+        if (close1==-1) fprintf(stderr,"error no se pudo cerrar el archivo : %s",FILE1);
+        if (close2==-1) fprintf(stderr,"error no se pudo cerrar el archivo : %s",FILE2);
         
     }
     else{
