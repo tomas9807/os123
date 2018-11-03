@@ -1,97 +1,86 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdlib.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <sys/times.h>
 
+char ** get_parametros(int argc,char  **argv){
+    int const start_point_parametros = 1;
+    if (argc==2) return NULL; //no parameters supplied
+  
+   
+    size_t length_parametros = (argc  - start_point_parametros) + 1;  //+1 cause  will need a space for NULL
 
+    
+    char **parametros = (char **)malloc(length_parametros* sizeof(char*));
+    perror("allocating memory");
+    for (size_t i=0;i<(length_parametros -1 /*-1 for null at the end */);i++) 
+        parametros[i] = argv[i + start_point_parametros];
+    parametros[length_parametros -1] = NULL; //ensure that last one is null
+    
+    return parametros;
+    
 
-void print_str(int fd,char const *string){
-    int length_str = (int) strlen(string);
-    for (int i=0;i<=length_str;i++){
-        write(fd,&string[i],sizeof(char));
     }
-    write(STDOUT_FILENO,"\n",sizeof(char));
+
+// void print_parametros(char **params){
+//     for(int i=0;i<3;i++)
+//     printf("param[%i] : %s",i,params[i]);
+//     fflush(stdout);
+// }  
+
+
+int main(int argc,char *argv[]){
+
+
+
+if (argc>1){
+
+
+struct tms buf;
+long double clktck=sysconf(_SC_CLK_TCK);
+char const *prog = argv[1];
+char **parametros = get_parametros(argc,argv);
+int status;
+clock_t proccess_time;
+
+
+pid_t pdi = fork() ;  //crear un proceso hijo para que sea depues reemplazado por el programa a correr
+if (pdi<0){
+    puts("error fork");
+}
+else if (pdi==0){  //es hijo
+  
+   execv(prog,parametros);
+}
+else{ //es padre
+   if (wait(&status)==-1)  puts("wait error");
+   else if (!WIFEXITED(status)) puts("proceso hijo  tuvo un error y no se completo exitosamente :");
+   else if((proccess_time=times(&buf))==-1) puts("error al calcular el tiempo del proceso hijo");
+   else{
+    // printf("proceso hijo copiado %Lf seconds ago.\n\n",
+    //        ((long double) proccess_time)/clktck);
+    printf("            utime           stime\n");
+    // printf("parent:    %Lf        %Lf\n",
+    //        ((long double) buf.tms_utime)/clktck,
+    //        ((long double) buf.tms_stime)/clktck);
+    printf("child:     %Lf        %Lf\n",
+           ((long double) buf.tms_cutime)/clktck,
+           ((long double) buf.tms_cstime)/clktck);
+   }
+   free(parametros);
+
+   
 }
 
 
 
-int main (int argc, char *argv[]){
-    
-    if (argc!=4){
-
-    print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2 \n");
-    exit(1);
-
-    }
-  
-    int const BUFFSIZE  =  atoi(argv[1]);
-    char const *FILE1 = argv[2];
-    char const *FILE2 = argv[3];
-    
-    if (!BUFFSIZE || !*FILE1 || !*FILE2){
-        print_str(STDERR_FILENO,"Ha ocurrido un error con los parametros ingresados, la sintaxis es: ucp buffersize file1 file2");
-       
-       fflush(stdout);
-        exit(1);
-    }
-   
-
-    if (BUFFSIZE>1 && BUFFSIZE<16384){
-
-        char  BUFFER [BUFFSIZE];
-
-        int fd_file1, fd_file2;
-        
-        if ((fd_file1=open(FILE1,O_RDONLY)) == -1){
-            if( (fd_file2=open(FILE2,O_WRONLY|O_CREAT,0777)) ==-1 ){
 
 
-             if (read(fd_file1,BUFFER,sizeof(BUFFER)) < 0) {
-                  print_str(STDERR_FILENO,"ha ocurrido un error al leer el archivo a copiar");
-                  exit(1);
-             }
-                
-                if (write(fd_file2,BUFFER,sizeof(BUFFER)) < 0){
-                    print_str(STDERR_FILENO,"ha ocurrido un error mientras se copiaba el archivo");
-                    exit(1);
-                }
-            
-            
-           
+}
 
-           
-            
 
-                
-            }
-            else{
-                
-            print_str(STDERR_FILENO,strcat("Ha ocurrido un error con el segundo archivo ingresado como ->",FILE2));
-            exit(1);
 
-            }
-
-         
-            
-        }
-        else{
-
-        print_str( STDERR_FILENO,strcat(strcat( "Ha ocurrido un error con el primer archivo ingresado como -> ",FILE1),", Es posible que el archivo no exista o no tiene los permisos para leer") );
-        exit(1);
-        }
-        int close1 = close(fd_file1);
-        int close2 = close(fd_file2);
-        if (close1==-1) fprintf(stderr,"error no se pudo cerrar el archivo : %s",FILE1);
-        if (close2==-1) fprintf(stderr,"error no se pudo cerrar el archivo : %s",FILE2);
-        
-    }
-    else{
-        print_str(STDERR_FILENO,"El buffer excede el rango establecido de 1 a 16384 bytes");
-        exit(1);
-    }
-    return 0;
-
-    
 }

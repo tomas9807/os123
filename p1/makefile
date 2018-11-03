@@ -1,0 +1,5 @@
+#!/bin/bash
+
+clang 2.c -o max_processes_per_user 
+clang 3.c -o ucp 
+clang 4.c -o timeprog
