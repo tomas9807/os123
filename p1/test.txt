@@ -4,45 +4,39 @@
 • Para cada artículo: Número de artículo (único), Fábricas que lo distribuyen, Existencias de ese artículo en cada fábrica, Descripción del artículo.
 • Para cada pedido: Cada pedido tiene una cabecera y el cuerpo del pedido. La cabecera está formada por el número de cliente, dirección de envío y fecha del pedido. El cuerpo del pedido son varias líneas, en
 cada línea se especifican el número del artículo pedido y la cantidad.
-Además, se ha determinado que se debe almacenar la información de las fábricas. Sin embargo, dado el uso de distribuidores, se usará: Número de la fábrica (único) y Teléfono de contacto. Y se desean ver
+Además, se ha determinado que se dee almacenar la información de las fábricas. Sin embargo, dado el uso de distribuidores, se usará: Número de la fábrica (único) y Teléfono de contacto. Y se desean ver
 cuántos artículos (en total) provee la fábrica. 
 
 Nota: Una dirección se entenderá como Nº, Calle, Comuna y Ciudad. Una fecha incluye hora.
 
-Se pide hacer el modelo ER para la base de datos que represente esta información.
+Se pide hacer el modelo ER para la base d datos que represente esta información.
 		
 2.  Le contratan para hacer una BD que permita apoyar la gestión de un sistema de ventas. La empresa necesita llevar un control de proveedores, clientes, productos y ventas.
 
 Un proveedor tiene un RUT, nombre, dirección , teléfono y página Web. 
 
 Un cliente también tiene RUT, nombre, dirección, pero puede tener varios teléfonos de contacto. La dirección se entiende por calle, numero y ciudad.
-
 Un producto tiene un ID único, nombre, precio actual,  stock y nombre de proveedor. Además se organizan en categorías y cada producto va solo en una categoría. Una categoría tiene ID, nombre y descripción.
-
 Por razones de contabilidad, se debe registrar la información de cada venta con un ID , fecha, cliente, descuento y monto final. Además se debe guardar el precio al momento de la venta , la cantidad vendida y el monto total del producto.
 
 3. Sistema de vuelos
 
-Obtener el diagrama E/R para un sistema de control de vuelos adaptado a las siguientes reglas de gestión (indicar las entidades, interrelaciones, etc., que se deducen de cada una de las reglas):
+Obtener el diagraa E/R para un sistema de ontrol de vuelos adaptado a las siguientes reglas de gestión (indicar las entidades, interrelaciones, etc., que se deducen de cada una de las reglas):
 
-a) De cada aeropuerto se conoce su código, nombre, ciudad y país.
+a) De cada aeropuerto se conoce u código, nombre, ciudad y país.
 b) En cada aeropuerto pueden tomar tierra diversos modelos de aviones (el modelo de un avión determina su capacidad, es decir, el número de plazas).
 c) En cada aeropuerto existe una colección de programas de vuelo. En cada programa de vuelo se indica el número de vuelo, línea aérea y días de la semana en que existe dicho vuelo.
-d) Cada programa de vuelo despega de un aeropuerto y aterriza en otro.
-e) Los números de vuelo son únicos para todo el mundo.
-f) En cada aeropuerto hay múltiples aterrizajes y despegues. Todos los aeropuertos contemplados están en activo, es decir, tienen algún aterrizaje y algún despegue.
+d) Cada programaúnicos para todo el mudo.
+f) En cada aeropuerto hay múltiples aterrizajes y desegues. Todos los aeropuertos contemplados están en activo, es decir, tienen algún aterrizaje y algún despegue.
 g) Cada vuelo realizado pertenece a un cierto programa de vuelo. Para cada vuelo se quiere conocer su fecha, plazas vacías y el modelo de avión utilizado.
-h) Algunos progras de vuelo incorporan escalas técnicas intermedias entre los aeropuertos de salida y de llegada. Se entiende por escala técnica a un aterrizaje y despegue consecutivos sin altas ó bajas de pasajeros.
-i) De cada vuelo se quieren conocer las escalas técnicas ordenadas asignándole a cada una un número de orden.
+h) Algunos programas de vuelo calas técnicas intermedias entre los aeropuertos de salida y de llegada. Se entiende por escala técnica a un aterrizaje y despegue consecutivos sin altas ó bajas de pasajeros.
+i) De cada vuelo se quieren conocer las escalas técicas ordenadas asignándole a cada una un número de orden.
 
-Por ejemplo, el programa de vuelo 555 de Iberia con vuelos los lunes y jueves despega de Barajas-Madrid-España y aterriza en Caudell-Sydney-Australia teniendo las siguientes escalas técnicas: 1- Los Pradiños-Sao Paulo-Brasil, 2-El Emperador-Santiago-Chile y 3-Saint Kitts-Auckland-Nueva Zelanda.
+Por ejemplo, el programa de vuelo 555 
 
-
-4. Un concesionario de automóviles desea informar su gestión de ventas de vehículos. En particular, se quiere almacenada la información referente a los clientes que compran en el concesionario, los vehículos vendidos, así como los vendedores que realizan las distintas ventas. Para ello se tendrá en cuenta que:
-
+4. Un concesionario de automóviles de
     • El concesionario dispone de un catálogo de vehículos definidos por su marca, modelos, cilindrada y precio.
-    • Cada uno de los modelos dispondrá de unas opciones adicionales (aire acondicionado, pintura metalizada, etc.). Las opciones vienen definidas por un nombre y una descripción. Hay que tener en cuenta que una opción puede ser común para varios modelos variando solo el precio en cada caso.
-    • En cuanto a los clientes, la información de interés es el nombre, DNI, dirección y teléfono, lo mismo que para los vendedores.
-    • Los clientes pueden ceder su coche usado en el momento de comprar un vehículo nuevo. El coche usado vendrá definido por su marca, modelo, matricula y precio de tasación. Es importante conocer la fecha en la que el cliente realiza esta cesión.
+    • Cada uno de los modelos dispondrá de unas opcioes adicionales (aire acondicionado, pintura metalizada, etc.). Las opciones vienen definidas por un nombre y una descripción. Hay que tener en cuenta que una opción puede ser común para varios modelos variando solo el precio en cada caso.
+    • En cuanto a los clientusado en el momento de comprar un vehículo nuevo. El coche usado vendrá definido por su marca, modelo, matricula y precio de tasación. Es importante conocer la fecha en la que el cliente realiza esta cesión.
     • Se desea saber que vendedor ha vendido que modelo a que cliente, También la fecha de la venta y la matricula del nuevo vehículo. Es importante así mismo saber las opciones que el cliente ha elegido para el modelo que compra.
- 
+
