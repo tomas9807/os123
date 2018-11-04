@@ -47,6 +47,20 @@ int status;
 clock_t proccess_time;
 
 
+
+    int const start_point_parametros = 1;
+    if (argc==2) return NULL; //no parameters supplied
+  
+   
+    size_t length_parametros = (argc  - start_point_parametros) + 1;  //+1 cause  will need a space for NULL
+
+    
+    char *parametros[length_parametros];
+    perror("allocating memory");
+    for (size_t i=0;i<(length_parametros -1 /*-1 for null at the end */);i++) 
+        parametros[i] = argv[i + start_point_parametros];
+    parametros[length_parametros -1] = NULL; //ensure that last one is null
+
 pid_t pdi = fork() ;  //crear un proceso hijo para que sea depues reemplazado por el programa a correr
 if (pdi<0){
     puts("error fork");
