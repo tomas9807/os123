@@ -23,8 +23,8 @@ unsigned long get_file_size(char const *file_path){
 
 
 int main (int argc, char *argv[]){
-    size_t min_buff_size = 2;
-    size_t max_buff_size = 16383;
+    size_t min_buff_size = 1;
+    size_t max_buff_size = 16384;
 
     if (argc!=4){
 
