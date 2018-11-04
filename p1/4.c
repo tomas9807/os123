@@ -42,7 +42,7 @@ if (argc>1){
 struct tms buf;
 long double clktck=sysconf(_SC_CLK_TCK);
 char const *prog = argv[1];
-char **parametros = get_parametros(argc,argv);
+
 int status;
 clock_t proccess_time;
 
