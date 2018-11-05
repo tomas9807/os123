@@ -46,7 +46,7 @@ double elapsed = 0.0;
 
 if (argc>1){
 
-struct tms elapsed_time;
+
 
 
 
@@ -71,16 +71,13 @@ else{ //es padre
 
    if (wait(&status)==-1)  perror("wait error");
    else if (!WIFEXITED(status)) perror("proceso hijo  tuvo un error y no se completo exitosamente :");
-   else if((times(&elapsed_time))==-1) perror("error al calcular el tiempo del proceso hijo");
+   
    else{
     gettimeofday(&tv, NULL);
     elapsed = (tv.tv_sec - start_tv.tv_sec) +
     (tv.tv_usec - start_tv.tv_usec) / 1000000.0;
-    printf("cpu time %f\n\n",  (double)elapsed_time.tms_utime);
-    printf("cpu Utime %f\n\n", (double)elapsed_time.tms_stime);
-    printf("cpu Stime %f\n\n", (double)elapsed_time.tms_cutime);
-    printf("cpu CStime %f\n\n", (double)elapsed_time.tms_cstime);
-    printf("real execution time: %fs\n\n", elapsed);
+   
+    printf("tiempo de ejecucion del proceso: %fs \n\n", elapsed);
    }
    free(parametros);
 
