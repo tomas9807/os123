@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+
+rm max_processes_per_user  ucp timeprog signal
+

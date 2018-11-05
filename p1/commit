@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+echo "enter commit message: " 
+read commit
+git add src/ commit delete make && git commit -am commit
+
+git push origin master
+
+
+
