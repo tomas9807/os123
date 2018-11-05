@@ -60,12 +60,12 @@ else{ //es padre
    else if (!WIFEXITED(status)) puts("proceso hijo  tuvo un error y no se completo exitosamente :");
    else if((proccess_time=times(&buf))==-1) puts("error al calcular el tiempo del proceso hijo");
    else{
-    // printf("proceso hijo copiado %Lf seconds ago.\n\n",
-    //        ((long double) proccess_time)/clktck);
+     printf("proceso hijo copiado %Lf seconds ago.\n\n",
+           ((long double) proccess_time)/clktck);
     printf("            utime           stime\n");
-    // printf("parent:    %Lf        %Lf\n",
-    //        ((long double) buf.tms_utime)/clktck,
-    //        ((long double) buf.tms_stime)/clktck);
+     printf("parent:    %Lf        %Lf\n",
+           ((long double) buf.tms_utime)/clktck,
+           ((long double) buf.tms_stime)/clktck);
     printf("child:     %Lf        %Lf\n",
            ((long double) buf.tms_cutime)/clktck,
            ((long double) buf.tms_cstime)/clktck);
