@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/times.h>
-
+#include <sys/time.h>
 char ** get_parametros(int argc,char  **argv){
     int const start_point_parametros = 1;
     if (argc==2) return NULL; //no parameters supplied
@@ -33,14 +33,24 @@ char ** get_parametros(int argc,char  **argv){
 
 
 int main(int argc,char *argv[]){
+struct timeval tv;
+struct timeval start_tv;
+
+gettimeofday(&start_tv, NULL);
+
+
+double elapsed = 0.0;
+
 
 
 
 if (argc>1){
 
+struct tms elapsed_time;
 
-struct tms buf;
-long double clktck=sysconf(_SC_CLK_TCK);
+
+
+long  CLOCKS_PER_SEC=sysconf(_SC_CLK_TCK);
 char const *prog = argv[1];
 char **parametros = get_parametros(argc,argv);
 int status;
@@ -56,19 +66,21 @@ else if (pdi==0){  //es hijo
    execv(prog,parametros);
 }
 else{ //es padre
+   
+    
+
    if (wait(&status)==-1)  puts("wait error");
    else if (!WIFEXITED(status)) puts("proceso hijo  tuvo un error y no se completo exitosamente :");
-   else if((proccess_time=times(&buf))==-1) puts("error al calcular el tiempo del proceso hijo");
+   else if((times(&elapsed_time))==-1) puts("error al calcular el tiempo del proceso hijo");
    else{
-     printf("proceso hijo copiado %Lf seconds ago.\n\n",
-           ((long double) proccess_time)/clktck);
-    printf("            utime           stime\n");
-     printf("parent:    %Lf        %Lf\n",
-           ((long double) buf.tms_utime)/clktck,
-           ((long double) buf.tms_stime)/clktck);
-    printf("child:     %Lf        %Lf\n",
-           ((long double) buf.tms_cutime)/clktck,
-           ((long double) buf.tms_cstime)/clktck);
+    gettimeofday(&tv, NULL);
+    elapsed = (tv.tv_sec - start_tv.tv_sec) +
+    (tv.tv_usec - start_tv.tv_usec) / 1000000.0;
+    printf("cpu time %f\n\n",  (double)elapsed_time.tms_utime);
+    printf("cpu Utime %f\n\n", (double)elapsed_time.tms_stime);
+    printf("cpu Stime %f\n\n", (double)elapsed_time.tms_cutime);
+    printf("cpu CStime %f\n\n", (double)elapsed_time.tms_cstime);
+    printf("real execution time: %fs\n\n", elapsed);
    }
    free(parametros);
 
