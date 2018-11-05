@@ -73,13 +73,12 @@ int main(int argc, char *argv[])
                     perror("no existe usuario con el valor de udi2 o es root (y se ejecuto sin permisos de root)");
                     exit(1);
                 }
-
+                pid_t pdi_fork2;
                 for (size_t i = 0; i < count2; i++)
                 {
-                    pid_t pdi_fork2 = fork();
+                    pdi_fork2 = fork();
                     if (pdi_fork2 == 0)
                     {
-
                         while (1)
                         {
                         }
@@ -90,7 +89,7 @@ int main(int argc, char *argv[])
                         perror("error forking from child udi2");
                     }
                 }
-                wait(NULL);
+               
 
                 type_uid = 2;
                 if (signal(SIGUSR1, print_time) == SIG_ERR)
