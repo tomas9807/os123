@@ -50,7 +50,7 @@ struct tms elapsed_time;
 
 
 
-long  CLOCKS_PER_SEC=sysconf(_SC_CLK_TCK);
+
 char const *prog = argv[1];
 char **parametros = get_parametros(argc,argv);
 int status;
