@@ -69,9 +69,9 @@ else{ //es padre
    
     
 
-   if (wait(&status)==-1)  puts("wait error");
-   else if (!WIFEXITED(status)) puts("proceso hijo  tuvo un error y no se completo exitosamente :");
-   else if((times(&elapsed_time))==-1) puts("error al calcular el tiempo del proceso hijo");
+   if (wait(&status)==-1)  perror("wait error");
+   else if (!WIFEXITED(status)) perror("proceso hijo  tuvo un error y no se completo exitosamente :");
+   else if((times(&elapsed_time))==-1) perror("error al calcular el tiempo del proceso hijo");
    else{
     gettimeofday(&tv, NULL);
     elapsed = (tv.tv_sec - start_tv.tv_sec) +
