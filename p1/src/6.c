@@ -162,13 +162,14 @@ int main(int argc, char *argv[])
                 perror("error forking uid2");
                 exit(1);
             }
-            puts("  UID  COUNT  USERTIME   SYSTEMTIME   USER+SYSTEM \n");
+            printf("espere %zus \n\n",time_);
             sleep(time_);
-
+            puts("  UID  COUNT  USERTIME   SYSTEMTIME   USER+SYSTEM \n");
             kill(ppid_udi1, SIGUSR1);
             kill(ppid_udi2, SIGUSR1);
             waitpid(ppid_udi1, NULL, 0);
             waitpid(ppid_udi2, NULL, 0);
+         
         }
         else
         {
