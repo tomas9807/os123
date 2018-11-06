@@ -18,8 +18,7 @@ char ** get_parametros(int argc,char  **argv){
     perror("allocating memory");
     for (size_t i=0;i<(length_parametros -1 /*-1 for null at the end */);i++) 
         parametros[i] = argv[i + start_point_parametros];
-    parametros[length_parametros -1] = NULL; //ensure that last one is null
-    
+   
     return parametros;
     
 
@@ -35,8 +34,6 @@ char ** get_parametros(int argc,char  **argv){
 int main(int argc,char *argv[]){
 struct timeval tv;
 struct timeval start_tv;
-
-gettimeofday(&start_tv, NULL);
 
 
 double elapsed = 0.0;
@@ -68,6 +65,8 @@ else if (pdi==0){  //es hijo
 else{ //es padre
    
     
+   
+   gettimeofday(&start_tv, NULL);
 
    if (wait(&status)==-1)  perror("wait error");
    else if (!WIFEXITED(status)) perror("proceso hijo  tuvo un error y no se completo exitosamente :");
