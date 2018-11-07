@@ -47,7 +47,14 @@ int main (int argc, char *argv[]){
 
     if (BUFFSIZE >= min_buff_size && BUFFSIZE<=max_buff_size){
             unsigned long file_size;
-            if (BUFFSIZE > (file_size=get_file_size(FILE1))){
+            file_size=get_file_size(FILE1);
+           
+            if(file_size ==0){
+                printf("file size: %lu \n",file_size);
+                perror("el primer archivo esta vacio");
+                exit(1);
+            }
+            if (BUFFSIZE > file_size){
                 BUFFSIZE = (size_t) file_size;
             }
         char  BUFFER [BUFFSIZE];

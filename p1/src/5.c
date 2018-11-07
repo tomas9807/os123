@@ -46,7 +46,7 @@ if (pipe(pfd) < 0 ){
 c1 = fork();
 
 if (c1==0){ //hijo c1
-    perror("child c1 created and running");
+   
     if (signal(SIGALRM, send_message)== SIG_ERR){
     perror("no se pudo crear la senal c1");
     exit(1);
@@ -78,7 +78,7 @@ else if (c1 > 0 ){ //padre
 c2 = fork();
 
 if (c2==0){
-  perror("child c2 created and running");
+
     if (signal(SIGUSR1, print_message)== SIG_ERR){
     perror("no se pudo crear la senal c2 ");
     exit(1);
@@ -105,7 +105,7 @@ else if (c2 < 0){
 
 
 
-perror("esperando ouput de c2");
+
 wait(NULL);
 
 }
