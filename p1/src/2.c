@@ -36,6 +36,7 @@ int main()
                 pid = fork();
                 if (pid == 0)
                 {
+                    perror("proccess created");
                     while (1)
                     {
                     }
@@ -44,6 +45,7 @@ int main()
                 {
 
                     printf("el numero de procesos maximo que se alcanzo  del usuario %s (uid : %u) es: %zu \n\n", getpwuid(uid)->pw_name, uid, cont);
+                    
                     kill(getpgrp(), SIGKILL);
                     exit(0);
                 }
