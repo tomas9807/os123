@@ -9,7 +9,7 @@
 
 int main()
 {
-    puts("escriba 1 para ver el limite de procesos proporcionado por el kernel o 2 para probar bifurcando procesos hasta que no se reciba mas pids \n");
+    puts("escriba 1 para ver el limite de procesos proporcionado por el kernel o 2 para probar bifurcando procesos hasta que no se reciba mas pids (puede ser lento) \n");
     int c;
     puts("ingrese 1 o 2 : ");
      
