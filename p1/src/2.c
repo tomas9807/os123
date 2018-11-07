@@ -29,14 +29,14 @@ int main()
         else
         {
             __pid_t pid;
-            size_t cont = 1;
+            unsigned long cont = 1;
 
             while (cont)
             {
                 pid = fork();
                 if (pid == 0)
                 {
-                    fprintf("process created %zu",cont);
+                    printf("process created %lu \n",cont);
                     while (1)
                     {
                     }
@@ -44,7 +44,7 @@ int main()
                 else if (pid < 0)
                 {
 
-                    printf("el numero de procesos maximo que se alcanzo  del usuario %s (uid : %u) es: %zu \n\n", getpwuid(uid)->pw_name, uid, cont);
+                    printf("el numero de procesos maximo que se alcanzo  del usuario %s (uid : %u) es: %lu \n\n", getpwuid(uid)->pw_name, uid, cont);
                     
                     kill(getpgrp(), SIGKILL);
                     exit(0);
