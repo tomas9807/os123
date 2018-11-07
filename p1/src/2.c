@@ -36,7 +36,7 @@ int main()
                 pid = fork();
                 if (pid == 0)
                 {
-                    perror("proccess created");
+                    fprintf("process created %zu",cont);
                     while (1)
                     {
                     }
