@@ -7,14 +7,20 @@
 #include <sys/signal.h>
 #include <stdlib.h>
 
+void kill_children(int signum)
+{
+
+    killpg(getpgrp(), SIGKILL);
+}
+
 int main()
 {
-    puts("escriba 1 para ver el limite de procesos proporcionado por el kernel o 2 para probar bifurcando procesos hasta que no se reciba mas pids (puede ser lento) \n");
+    puts("escriba 1 para ver el limite de procesos proporcionado por el kernel o 2 para probar bifurcando procesos hasta que el sistema aguante (puede ser lento) \n");
     int c;
     puts("ingrese 1 o 2 : ");
-     
+
     scanf("%d", &c);
-  
+
     if (c == 1 || c == 2)
     {
         __uid_t uid = getuid();
@@ -30,13 +36,21 @@ int main()
         {
             __pid_t pid;
             unsigned long cont = 1;
+            unsigned long anterior_cont;
+
+            if (signal(SIGINT, kill_children) == SIG_ERR)
+            {
+                perror("cannot create signal");
+                exit(1);
+            }
 
             while (cont)
             {
+                anterior_cont = cont;
                 pid = fork();
                 if (pid == 0)
                 {
-                    printf("process created %lu \n",cont);
+                    printf("proceso numero %lu creado (mata a todo los procesos con CONTROL-C) \n", cont);
                     while (1)
                     {
                     }
@@ -45,11 +59,16 @@ int main()
                 {
 
                     printf("el numero de procesos maximo que se alcanzo  del usuario %s (uid : %u) es: %lu \n\n", getpwuid(uid)->pw_name, uid, cont);
-                    
+
                     kill(getpgrp(), SIGKILL);
                     exit(0);
                 }
+
                 cont++;
+                if (anterior_cont > cont)
+                {
+                    cont = anterior_cont;
+                }
             }
         }
     }
