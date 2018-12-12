@@ -61,24 +61,48 @@ PUBLIC struct boot_image image[NR_BOOT_PROCS];
  *===========================================================================*/
 PUBLIC void procesos_usuario_activo_dmp()   /*FUNCION AGREGADA */
 {
- struct mproc *mp;
- int i,n=0;
-  if(getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc, sizeof(mproc))!=OK){
-    perror("Error obtaining table from PM. Perhaps recompile IS? \n");
-    return;
+ struct mproc *process; //esta estructura almacena los procesos
+ 
+  if(getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc, sizeof(mproc))){   
+    
+    /* 
+
+    - getsysinfo() es un kernel call
+
+    - argumentos de getsysinfo():
+      endpoint_t who //from whom to request info
+      int what //what info is requested
+      void * where //where to put it
+      size_t size // how big it should be
+
+    - endpoint_t who: PM_PROC_NR para que PM se encarge de obtener info
+    - int what : SI_PROC_TAB copia tabla de procesos entera
+    - void *where: mproc guarde la info de un proceso 
+    - size_t size:  sizeof(mproc)
+
+
+
+    */
+
+
+    perror("Error al obtener tabla de procesos en memoria \n");
+    exit(1);
   }
-  for(i=0;i<NR_PROCS;i++){
-    mp=&mproc[i];
-    // if(mp->mp_pid==0 && i!=PM_PROC_NR){
+  else{
+     puts("TABLA DE PROCESOS DEL USUARIO ACTIVO \n")
+  for(int i=0;i<NR_PROCS;i++){
+    process=&mproc[i];
+   
       puts("--------------------------- \n")
-      printf("process' index: %i |",mp->mp_tracer);
-      printf("process' index??: %i |",i);
-      printf("process' name: %s|",mp->mp_name);
-      printf("process' id: %u |",(unsigned int) mp->mp_id);
-      printf("process' real uid: %u |",mp->mp_realuid);
-      printf("process' effective uid: %u |",mp->mp_effuid);
+      printf("index: %i |",mp->mp_tracer);
+      printf("nombre: %s|",mp->mp_name);
+      printf("id: %u |",(unsigned int) mp->mp_id);
+      printf("real uid: %u |",mp->mp_realuid);
+      printf("effective uid: %u |",mp->mp_effuid);
       fflush(stdout);
 
+  }
+  
     
     
   }
